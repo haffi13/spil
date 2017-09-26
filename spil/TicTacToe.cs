@@ -35,7 +35,6 @@ namespace spil
             resultat = resultat + "  *******************\n";
             resultat = resultat + "     1     2     3    X\n";
 
-            
             return resultat;
         }
 

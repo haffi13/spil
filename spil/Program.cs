@@ -16,10 +16,25 @@ namespace spil
 
         private void Run()
         {
-            TicTacToeMenu ticTacToeMenu = new TicTacToeMenu();
-            ticTacToeMenu.DoActionFor1();
-            //ticTacToeMenu.GameModeSelect();
-            ticTacToeMenu.Show();
+            SelectGame();
+            
+        }
+
+        public void SelectGame()
+        {
+            Console.WriteLine("1  -  Battleships\n2  -  TicTacToe");
+            int sel = Convert.ToInt32(Console.ReadLine());
+            if(sel == 1)
+            {
+                BsMenu menu = new BsMenu();
+                menu.Show();
+                //menu.PlaceShips();
+            }
+            else
+            {
+                TicTacToeMenu menu = new TicTacToeMenu();
+                menu.Show();
+            }
         }
     }
 }

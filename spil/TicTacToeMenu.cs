@@ -15,18 +15,44 @@ namespace spil
                 choice = GetUserChoise();
                 switch (choice)
                 {
-                    case "1": DoActionFor1(); running = false; break;
+                    case "1": DoActionFor1(); break;
                     case "2": DoActionFor2(); break;
                     case "3": DoActionFor3(); break;
-                    case "0": running = false; break;
+                    case "0": running = false; DoActionFor0(); break;
                     default : ShowMenuSelectionError(); break;
                 }
             } while (running);
         }
 
+        public void GameModeSelect() //used by place and move in TicTacToe to determine game mode
+        {
+            int gameMode;
+            Console.WriteLine("Select game mode: \n\n  1: 3 Bricks \n  2: Unlimited");
+            while (true)
+            {
+                try
+                {
+                    gameMode = Convert.ToInt32(Console.ReadLine().Trim());
+                    if(gameMode == 1 || gameMode == 2)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Selection is not valid!");
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Selection is not valid!");
+                }
+            }
+            ticTacToe.gameMode = gameMode;
+        }
+
         private void ShowMenu()
         {
-            //Console.Clear();
+            Console.Clear();
             if (ticTacToe != null)
             {
                 Console.WriteLine(ticTacToe.GetGameBoardView());
@@ -35,15 +61,21 @@ namespace spil
             Console.WriteLine();
             Console.WriteLine("1. Oret nyt spil");
             Console.WriteLine("2. Set en brik");
-            Console.WriteLine("3. Flyt en brik");
-            Console.WriteLine();
+            Console.WriteLine("3. Flyt en brik\n");
             Console.WriteLine("0. exit");
+            if(ticTacToe.currentPlayer == ' ' || ticTacToe.currentPlayer == 'X')
+            {
+                Console.WriteLine("\n--- X ----");
+            }
+            else
+            {
+                Console.WriteLine("\n--- O ---");
+            }
         }
 
         private string GetUserChoise()
         {
-            Console.WriteLine();
-            Console.Write("Indtast dit valg: ");
+            Console.Write("\nIndtast dit valg: ");
             return Console.ReadLine();
         }
 
@@ -51,37 +83,31 @@ namespace spil
         {
             Console.WriteLine("Ugyldigt valg.");
             Console.ReadLine();
-
         }
 
-        private void DoActionFor1()
+        public void DoActionFor1()
         {
-            TicTacToe tic = new TicTacToe();        //not correct,should clear selections
+            ticTacToe = new TicTacToe();
             Console.Clear();
-            Console.WriteLine(tic.GetGameBoardView());
-            //Console.WriteLine("skriv koden til at opret nyt spil");
-            //Console.ReadLine();
-            DoActionFor2();
+            GameModeSelect();
+            Console.WriteLine(ticTacToe.GetGameBoardView());
+            Show();
         }
         private void DoActionFor2()
         {
-            int xVal;
-            int yVal;
-            Console.Write("Select X: ");
-            xVal = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Select Y: ");
-            yVal = Convert.ToInt32(Console.ReadLine());
-
-            //Console.WriteLine("skriv koden til at få spillerens input til at sætte en brik");
-            TicTacToe tic = new TicTacToe();
-            tic.GameBoard[xVal, yVal] = 'x';
-            //Console.ReadLine();
-            DoActionFor1();
+            ticTacToe.GetPlacement();
+            ShowMenu();
         }
+        
         private void DoActionFor3()
         {
-            Console.WriteLine("skriv koden til at få spillerens input til at flytte en brik");
-            Console.ReadLine();
+            ticTacToe.ChangePlacement();
+            ShowMenu();
+        }
+
+        private void DoActionFor0()
+        {
+            Environment.Exit(0);
         }
     }
 }

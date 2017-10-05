@@ -17,10 +17,9 @@ namespace spil
         private void Run()
         {
             TicTacToeMenu ticTacToeMenu = new TicTacToeMenu();
+            ticTacToeMenu.DoActionFor1();
+            //ticTacToeMenu.GameModeSelect();
             ticTacToeMenu.Show();
-            //TicTacToe tic = new TicTacToe();
-            //tic.Validate();
-            
         }
     }
 }

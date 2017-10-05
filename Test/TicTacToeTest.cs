@@ -7,13 +7,26 @@ namespace Test
     [TestClass]
     public class TicTacToeTest
     {
+        //[TestMethod]
+        //public void NeitherPlayerHasThreeInARow()
+        //{
+        //    TicTacToe ticTacToe = new TicTacToe();
+        //    const char expectet = ' ';
+        //    char actual = ticTacToe.Validate();
+        //    Assert.AreEqual(expectet, actual);
+        //}
+
         [TestMethod]
-        public void NeitherPlayerHasThreeInARow()
+        public void IsBrikWithinLimits()
         {
-            TicTacToe ticTacToe = new TicTacToe();
-            const char expectet = ' ';
-            char actual = ticTacToe.Validate();
-            Assert.AreEqual(expectet, actual); 
+            TicTacToe ttt = new TicTacToe();
+
+        }
+        [TestMethod]
+        public void AreBriksEqual()
+        {
+            TicTacToe ttt = new TicTacToe();
+            
         }
     }
 }

@@ -83,6 +83,7 @@ namespace spil
         {
             Console.WriteLine("Ugyldigt valg.");
             Console.ReadLine();
+            Console.WriteLine("brajj");
         }
 
         public void DoActionFor1()

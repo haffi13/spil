@@ -88,7 +88,7 @@ namespace spil
             boardLayout += "   *     *     *     *     *     *     *     *     *     *     *\n";
             boardLayout += "   *************************************************************\n";
             boardLayout += "      A     B     C     D     E     F     G     H     I     J";
-
+            Console.WriteLine("hello");
             return boardLayout;
         }
 

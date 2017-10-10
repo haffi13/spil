@@ -110,60 +110,74 @@ namespace spil
             Skib Hangar = new Skib();
             Hangar.amount = 1;
             Hangar.length = 5;
-            
             Hangar.name = "Hangar";
+            ShipPlacingMessage(Hangar.amount, 0, Hangar.length, Hangar.name);
             int[] hangarXY = getXY();
             Hangar.startX = hangarXY[0];
             Hangar.startY = hangarXY[1];
-            //Hangar.direction = GetDirection();
+            Hangar.direction = GetDirection();
             SetShip(Hangar.name, Hangar.length, Hangar.startX, Hangar.startY, Hangar.direction);
-            
-            
 
-
-            /*Skib Slagskib = new Skib();
+            Skib Slagskib = new Skib();
             Slagskib.amount = 2;
             Slagskib.length = 4;
             Slagskib.name = "Slagskib";
-            
-                int[] slagskibXY = ttt.getXY();
+            for (int i = 0; i < Slagskib.amount; i++)
+            {
+                ShipPlacingMessage(Slagskib.amount, i, Slagskib.length, Slagskib.name);
+                int[] slagskibXY = getXY();
                 Slagskib.startX = slagskibXY[0];
                 Slagskib.startY = slagskibXY[1];
-                SetShip(Slagskib.length, Slagskib.startX, Slagskib.startY);
-            
-
+                Slagskib.direction = GetDirection();
+                SetShip(Slagskib.name, Slagskib.length, Slagskib.startX, Slagskib.startY, Slagskib.direction);
+            }
 
             Skib Destroyer = new Skib();
             Destroyer.amount = 2;
             Destroyer.length = 3;
             Destroyer.name = "Destroyer";
-            
-                int[] DestroyerXY = ttt.getXY();
+            for (int i = 0; i < Destroyer.amount; i++)
+            {
+                ShipPlacingMessage(Destroyer.amount, i, Destroyer.length, Destroyer.name);
+                int[] DestroyerXY = getXY();
                 Destroyer.startX = DestroyerXY[0];
                 Destroyer.startY = DestroyerXY[1];
-                SetShip(Destroyer.length, Destroyer.startX, Destroyer.startY);
+                Destroyer.direction = GetDirection();
+                SetShip(Destroyer.name, Destroyer.length, Destroyer.startX, Destroyer.startY, Destroyer.direction);
+            }
             
-            
-
             Skib Uboat = new Skib();
             Uboat.amount = 1;
             Uboat.length = 3;
             Uboat.name = "Uboat";
-            
-                int[] UboatXY = ttt.getXY();
-                Uboat.startX = UboatXY[0];
-                Uboat.startY = UboatXY[1];
-                SetShip(Uboat.length, Uboat.startX, Uboat.startY);
-            
+            ShipPlacingMessage(Uboat.amount, 0, Uboat.length, Uboat.name);
+            int[] UboatXY = getXY();
+            Uboat.startX = UboatXY[0];
+            Uboat.startY = UboatXY[1];
+            Uboat.direction = GetDirection();
+            SetShip(Uboat.name, Uboat.length, Uboat.startX, Uboat.startY, Uboat.direction);
 
             Skib PatrolBoat = new Skib();
             PatrolBoat.amount = 3;
             PatrolBoat.length = 2;
             PatrolBoat.name = "PatrolBoat";
-            int[] PatrolBoatXY = getXY();
-            PatrolBoat.startX = PatrolBoatXY[0];
-            PatrolBoat.startY = PatrolBoatXY[1];*/
+            for (int i = 0; i < PatrolBoat.amount; i++)
+            {
+                ShipPlacingMessage(PatrolBoat.amount, i, PatrolBoat.length, PatrolBoat.name);
+                int[] PatrolBoatXY = getXY();
+                PatrolBoat.startX = PatrolBoatXY[0];
+                PatrolBoat.startY = PatrolBoatXY[1];
+                PatrolBoat.direction = GetDirection();
+                SetShip(PatrolBoat.name, PatrolBoat.length, PatrolBoat.startX, PatrolBoat.startY, PatrolBoat.direction);
+            }
+        }
 
+        public string ShipPlacingMessage(int amout, int loopValue, int lenght, string name)
+        {
+            string ret = "You are placing a " + name + ". It's length is: " + lenght + ".\n" +
+                                  "You have " + (amout - loopValue) + " " + name + " left.";
+
+            return ret;
         }
 
         public void SetShip(string name, int shipLenght, int startX, int startY, int direction)
@@ -174,7 +188,7 @@ namespace spil
             {
                 if(direction == 3)
                 {
-                    startX -= (shipLenght-1);
+                    startY -= (shipLenght-1);
                 }
                 for (int i = 0; i < shipLenght; i++)
                 {
@@ -185,7 +199,7 @@ namespace spil
             {
                 if(direction == 2)
                 {
-                    startY -= (shipLenght-1);
+                    startX -= (shipLenght-1);
                 }
                 for (int i = 0; i < shipLenght; i++)
                 {
@@ -205,14 +219,15 @@ namespace spil
         public int GetDirection()
         {
             bool continueLoop = true;
+            int dirValue = 0;
             while (continueLoop)
             {
                 Console.WriteLine("Hvilke retning skal skibet være?\n1 = Nord -- 2 = East -- 3 = South -- 4 = West");
+                dirValue = Convert.ToInt32(Console.ReadLine());
                 continueLoop = false;
-
                 
             }
-            return 4;
+            return dirValue;
         }
 
         

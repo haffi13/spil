@@ -27,8 +27,10 @@ namespace spil
             if(sel == 1)
             {
                 BsMenu menu = new BsMenu();
+                Battleships bs = new Battleships();
                 //call for placing ships ??
                 menu.ShowBsMenu();
+                //Console.WriteLine(bs.GetGameBoardViewBs(bs.CurrentPlayer()));
 
                 //menu.PlaceShips();
             }

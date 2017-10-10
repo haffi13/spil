@@ -88,7 +88,6 @@ namespace spil
             boardLayout += "   *     *     *     *     *     *     *     *     *     *     *\n";
             boardLayout += "   *************************************************************\n";
             boardLayout += "      A     B     C     D     E     F     G     H     I     J";
-            Console.WriteLine("hello");
             return boardLayout;
         }
 
@@ -107,16 +106,29 @@ namespace spil
         public void PlaceShips()
         //9 total ships per player
         {
+            Console.WriteLine(GetGameBoardViewBs(CurrentPlayer()));
+
             Skib Hangar = new Skib();
             Hangar.amount = 1;
             Hangar.length = 5;
             Hangar.name = "Hangar";
-            ShipPlacingMessage(Hangar.amount, 0, Hangar.length, Hangar.name);
-            int[] hangarXY = getXY();
-            Hangar.startX = hangarXY[0];
-            Hangar.startY = hangarXY[1];
-            Hangar.direction = GetDirection();
-            SetShip(Hangar.name, Hangar.length, Hangar.startX, Hangar.startY, Hangar.direction);
+            for (int i = 0; i < Hangar.amount; i++)
+            {
+                Console.WriteLine(ShipPlacingMessage(Hangar.amount, 0, Hangar.length, Hangar.name));
+                int[] hangarXY = getXY();
+                Hangar.startX = hangarXY[0];
+                Hangar.startY = hangarXY[1];
+                Hangar.direction = GetDirection();
+                if (CheckPosition(Hangar.length, Hangar.startX, Hangar.startY, Hangar.direction) == true)
+                {
+                    SetShip(Hangar.name, Hangar.length, Hangar.startX, Hangar.startY, Hangar.direction);
+                }
+                else
+                {//put error msg's here ???
+                    i -= 1;
+                }
+
+            }
 
             Skib Slagskib = new Skib();
             Slagskib.amount = 2;
@@ -124,12 +136,19 @@ namespace spil
             Slagskib.name = "Slagskib";
             for (int i = 0; i < Slagskib.amount; i++)
             {
-                ShipPlacingMessage(Slagskib.amount, i, Slagskib.length, Slagskib.name);
+                Console.WriteLine(ShipPlacingMessage(Slagskib.amount, i, Slagskib.length, Slagskib.name));
                 int[] slagskibXY = getXY();
                 Slagskib.startX = slagskibXY[0];
                 Slagskib.startY = slagskibXY[1];
                 Slagskib.direction = GetDirection();
-                SetShip(Slagskib.name, Slagskib.length, Slagskib.startX, Slagskib.startY, Slagskib.direction);
+                if(CheckPosition(Slagskib.length, Slagskib.startX, Slagskib.startY, Slagskib.direction) == true)
+                {
+                    SetShip(Slagskib.name, Slagskib.length, Slagskib.startX, Slagskib.startY, Slagskib.direction);
+                }
+                else
+                {
+                    i -= 1;
+                }
             }
 
             Skib Destroyer = new Skib();
@@ -138,24 +157,42 @@ namespace spil
             Destroyer.name = "Destroyer";
             for (int i = 0; i < Destroyer.amount; i++)
             {
-                ShipPlacingMessage(Destroyer.amount, i, Destroyer.length, Destroyer.name);
+                Console.WriteLine(ShipPlacingMessage(Destroyer.amount, i, Destroyer.length, Destroyer.name));
                 int[] DestroyerXY = getXY();
                 Destroyer.startX = DestroyerXY[0];
                 Destroyer.startY = DestroyerXY[1];
                 Destroyer.direction = GetDirection();
-                SetShip(Destroyer.name, Destroyer.length, Destroyer.startX, Destroyer.startY, Destroyer.direction);
+                if(CheckPosition(Destroyer.length, Destroyer.startX, Destroyer.startY, Destroyer.direction) == true)
+                {
+                    SetShip(Destroyer.name, Destroyer.length, Destroyer.startX, Destroyer.startY, Destroyer.direction);
+                }
+                else
+                {
+                    i -= 1;
+                }
             }
             
             Skib Uboat = new Skib();
             Uboat.amount = 1;
             Uboat.length = 3;
             Uboat.name = "Uboat";
-            ShipPlacingMessage(Uboat.amount, 0, Uboat.length, Uboat.name);
-            int[] UboatXY = getXY();
-            Uboat.startX = UboatXY[0];
-            Uboat.startY = UboatXY[1];
-            Uboat.direction = GetDirection();
-            SetShip(Uboat.name, Uboat.length, Uboat.startX, Uboat.startY, Uboat.direction);
+            for (int i = 0; i < Uboat.amount; i++)
+            {
+                Console.WriteLine(ShipPlacingMessage(Uboat.amount, 0, Uboat.length, Uboat.name));
+                int[] UboatXY = getXY();
+                Uboat.startX = UboatXY[0];
+                Uboat.startY = UboatXY[1];
+                Uboat.direction = GetDirection();
+                if (CheckPosition(Uboat.length, Uboat.startX, Uboat.startY, Uboat.direction) == true)
+                {
+                    SetShip(Uboat.name, Uboat.length, Uboat.startX, Uboat.startY, Uboat.direction);
+                }
+                else
+                {
+                    i -= 1;
+                }
+            }
+            
 
             Skib PatrolBoat = new Skib();
             PatrolBoat.amount = 3;
@@ -163,13 +200,21 @@ namespace spil
             PatrolBoat.name = "PatrolBoat";
             for (int i = 0; i < PatrolBoat.amount; i++)
             {
-                ShipPlacingMessage(PatrolBoat.amount, i, PatrolBoat.length, PatrolBoat.name);
+                Console.WriteLine(ShipPlacingMessage(PatrolBoat.amount, i, PatrolBoat.length, PatrolBoat.name));
                 int[] PatrolBoatXY = getXY();
                 PatrolBoat.startX = PatrolBoatXY[0];
                 PatrolBoat.startY = PatrolBoatXY[1];
                 PatrolBoat.direction = GetDirection();
-                SetShip(PatrolBoat.name, PatrolBoat.length, PatrolBoat.startX, PatrolBoat.startY, PatrolBoat.direction);
+                if(CheckPosition(PatrolBoat.length, PatrolBoat.startX, PatrolBoat.startY, PatrolBoat.direction) == true)
+                {
+                    SetShip(PatrolBoat.name, PatrolBoat.length, PatrolBoat.startX, PatrolBoat.startY, PatrolBoat.direction);
+                }
+                else
+                {
+                    i -= 1;
+                }
             }
+            numberOfPlays++;
         }
 
         public string ShipPlacingMessage(int amout, int loopValue, int lenght, string name)
@@ -180,40 +225,104 @@ namespace spil
             return ret;
         }
 
-        public void SetShip(string name, int shipLenght, int startX, int startY, int direction)
+        public bool CheckPosition(int shipLenght, int startX, int startY, int direction)
         {
-            char init = name[0];
+            //char init = name[0];
 
-            if(direction == 1 || direction == 3)//north/south
+            //bool ret = false;
+            bool isOverlap = false;
+
+            if (direction == 1 || direction == 3)//1north/3south
             {
                 if(direction == 3)
                 {
                     startY -= (shipLenght-1);
+                    if(startY - (shipLenght-1) < 0)
+                    {
+                        isOverlap = true;
+                        Console.WriteLine("The ship must be ON the board!");
+                    }
+                }
+                else
+                {
+                    if(startY + (shipLenght-1) > 10)
+                    {
+                        isOverlap = true;
+                        Console.WriteLine("The ship must be ON the board!");
+                    }
                 }
                 for (int i = 0; i < shipLenght; i++)
                 {
-                    CurrentPlayer()[startX, startY + i] = init;
+                    if(CurrentPlayer()[startX, startY + i] != ' ')
+                    {
+                        isOverlap = true;
+                        Console.WriteLine("Your ships can NOT overlap!");
+                    }
+                   
+
+                    //CurrentPlayer()[startX, startY + i] = init;
                 }
             }
             if(direction == 2 || direction == 4)//east/west
             {
                 if(direction == 2)
                 {
-                    startX -= (shipLenght-1);
+                    //startX += (shipLenght-1);
+                    if(startX + (shipLenght-1) > 10)
+                    {//out of bounds
+                        isOverlap = true;
+                        Console.WriteLine("The ship must be ON the board!");
+                    }
+                }
+                else
+                {
+                    startX -= (shipLenght - 1);
+                    if (startX - (shipLenght - 1) < 0)
+                    {//out of bounds
+                        isOverlap = true;
+                        Console.WriteLine("The ship must be ON the board!");
+                    }
                 }
                 for (int i = 0; i < shipLenght; i++)
+                {
+                    if(CurrentPlayer()[startX + i, startY] != ' ')
+                    {
+                        isOverlap = true;
+                        Console.WriteLine("Your ships can NOT overlap!");
+                    }
+                }
+            }
+
+            return !isOverlap;
+        }
+
+        public void SetShip(string name, int shipLength, int startX, int startY, int direction)
+        {
+            char init = name[0];
+            if(direction == 1 || direction == 3)//1 north -- 3 south
+            {
+                if(direction == 3)
+                {
+                    startY -= (shipLength - 1);
+                }
+                for (int i = 0; i < shipLength; i++)
+                {
+                    CurrentPlayer()[startX, startY + i] = init;
+                }
+            }
+            if(direction == 2 || direction == 4)//2 east -- 4 west
+            {
+                if(direction == 4)
+                {
+                    startX -= (shipLength - 1);
+                }
+                for (int i = 0; i < shipLength; i++)
                 {
                     CurrentPlayer()[startX + i, startY] = init;
                 }
             }
-                
-
-
             Console.Clear();//make method
             Console.WriteLine(GetGameBoardViewBs(CurrentPlayer()));
-            Console.ReadKey();
-
-            //menu.ShootAtShip();
         }
 
         public int GetDirection()
@@ -223,9 +332,22 @@ namespace spil
             while (continueLoop)
             {
                 Console.WriteLine("Hvilke retning skal skibet være?\n1 = Nord -- 2 = East -- 3 = South -- 4 = West");
-                dirValue = Convert.ToInt32(Console.ReadLine());
-                continueLoop = false;
-                
+                try
+                {
+                    dirValue = Convert.ToInt32(Console.ReadLine());
+                    if (dirValue < 1 || dirValue > 4)
+                    {
+                        Console.WriteLine("Selection is not valid");
+                    }
+                    else
+                    {
+                        continueLoop = false;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Selection is not valid");
+                }                
             }
             return dirValue;
         }

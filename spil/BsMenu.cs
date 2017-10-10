@@ -20,8 +20,9 @@ namespace spil
                 choice = GetUserChoise();
                 switch (choice)
                 {
-                    case "1": ShootAtShip(); break;            //shoot
-                    case "2": StartOver(); break;          //startOVer
+                    case "1": PlaceShips(); break;
+                    case "2": PlaceShot(); break;                                            
+                    case "3": StartOver(); break;          //startOVer
                     case "0": ExitGame(); break;          //Exit
                     //case "0": running = false; DoActionFor0(); break;
                     default: break; // ShowMenuSelectionError(); break;
@@ -29,26 +30,28 @@ namespace spil
             } while (running);
         }
 
-        public void PlaceShips()
-        {
-            
-        }
+        
 
         
 
         private string GetUserChoise()
         {
             Console.Clear();
-            Console.WriteLine("1  -  Shoot\n2  -  Start Over\n0  -  Quit Game");
+            Console.WriteLine(battleships.GetGameBoardViewBs(battleships.CurrentPlayer()));
+            Console.WriteLine("1  -  Place Ships\n2  -  Place a shot\n0  -  Quit Game");
             Console.Write("\nIndtast dit valg: ");
             return Console.ReadLine();
         }
 
-        public void ShootAtShip()
-        {//shoot
+        public void PlaceShot()
+        {
+
+        }
+        public void PlaceShips()
+        {//placesShips
             Console.Clear();
-            battleships.PlaceShips();
             Console.WriteLine(battleships.GetGameBoardViewBs(battleships.player1ships));
+            battleships.PlaceShips();
             Console.ReadLine();
         }
 

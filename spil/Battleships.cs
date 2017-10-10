@@ -10,6 +10,7 @@ namespace spil
     {
         public char[,] player1ships { get; set; }
         public char[,] player2ships { get; set; }
+        public int numberOfPlays = 0;
 
         public Battleships()
         {
@@ -41,7 +42,7 @@ namespace spil
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
            };
         }
-        public string GetGameBoardView(char[,] curr)
+        public string GetGameBoardViewBs(char[,] curr)
         {
             string boardLayout = string.Empty;
 
@@ -89,6 +90,210 @@ namespace spil
             boardLayout += "      A     B     C     D     E     F     G     H     I     J";
 
             return boardLayout;
+        }
+
+        public char[,] CurrentPlayer()
+        {
+            if(numberOfPlays % 2 == 0)
+            {//player1
+                return player1ships;
+            }
+            else
+            {//player2
+                return player2ships;
+            }
+        }
+
+        public void PlaceShips()
+        //9 total ships per player
+        {
+            Skib Hangar = new Skib();
+            Hangar.amount = 1;
+            Hangar.length = 5;
+            
+            Hangar.name = "Hangar";
+            int[] hangarXY = getXY();
+            Hangar.startX = hangarXY[0];
+            Hangar.startY = hangarXY[1];
+            //Hangar.direction = GetDirection();
+            SetShip(Hangar.name, Hangar.length, Hangar.startX, Hangar.startY, Hangar.direction);
+            
+            
+
+
+            /*Skib Slagskib = new Skib();
+            Slagskib.amount = 2;
+            Slagskib.length = 4;
+            Slagskib.name = "Slagskib";
+            
+                int[] slagskibXY = ttt.getXY();
+                Slagskib.startX = slagskibXY[0];
+                Slagskib.startY = slagskibXY[1];
+                SetShip(Slagskib.length, Slagskib.startX, Slagskib.startY);
+            
+
+
+            Skib Destroyer = new Skib();
+            Destroyer.amount = 2;
+            Destroyer.length = 3;
+            Destroyer.name = "Destroyer";
+            
+                int[] DestroyerXY = ttt.getXY();
+                Destroyer.startX = DestroyerXY[0];
+                Destroyer.startY = DestroyerXY[1];
+                SetShip(Destroyer.length, Destroyer.startX, Destroyer.startY);
+            
+            
+
+            Skib Uboat = new Skib();
+            Uboat.amount = 1;
+            Uboat.length = 3;
+            Uboat.name = "Uboat";
+            
+                int[] UboatXY = ttt.getXY();
+                Uboat.startX = UboatXY[0];
+                Uboat.startY = UboatXY[1];
+                SetShip(Uboat.length, Uboat.startX, Uboat.startY);
+            
+
+            Skib PatrolBoat = new Skib();
+            PatrolBoat.amount = 3;
+            PatrolBoat.length = 2;
+            PatrolBoat.name = "PatrolBoat";
+            int[] PatrolBoatXY = getXY();
+            PatrolBoat.startX = PatrolBoatXY[0];
+            PatrolBoat.startY = PatrolBoatXY[1];*/
+
+        }
+
+        public void SetShip(string name, int shipLenght, int startX, int startY, int direction)
+        {
+            char init = name[0];
+
+            if(direction == 1 || direction == 3)//north/south
+            {
+                if(direction == 3)
+                {
+                    startX -= (shipLenght-1);
+                }
+                for (int i = 0; i < shipLenght; i++)
+                {
+                    CurrentPlayer()[startX, startY + i] = init;
+                }
+            }
+            if(direction == 2 || direction == 4)//east/west
+            {
+                if(direction == 2)
+                {
+                    startY -= (shipLenght-1);
+                }
+                for (int i = 0; i < shipLenght; i++)
+                {
+                    CurrentPlayer()[startX + i, startY] = init;
+                }
+            }
+                
+
+
+            Console.Clear();//make method
+            Console.WriteLine(GetGameBoardViewBs(CurrentPlayer()));
+            Console.ReadKey();
+
+            //menu.ShootAtShip();
+        }
+
+        public int GetDirection()
+        {
+            bool continueLoop = true;
+            while (continueLoop)
+            {
+                Console.WriteLine("Hvilke retning skal skibet være?\n1 = Nord -- 2 = East -- 3 = South -- 4 = West");
+                continueLoop = false;
+
+                
+            }
+            return 4;
+        }
+
+        
+          
+        /*public bool CheckPosition()
+        {//checks for overlap and puts ship on board...calls get ship
+            
+        }*/
+
+        public int[] getXY()    //gets x and y values 
+        {
+            int[] values = new int[2];
+            int xVal = 0;
+            int yVal = 0;
+            bool gotX = true;
+            bool gotY = true;
+            while (gotX)
+            {
+                Console.Write("Select A - J: ");
+
+                switch (Console.ReadLine().Trim().ToUpper().ToString())
+                {
+                    case "A":
+                        xVal = 1; gotX = false;
+                        break;
+                    case "B":
+                        xVal = 2; gotX = false;
+                        break;
+                    case "C":
+                        xVal = 3; gotX = false;
+                        break;
+                    case "D":
+                        xVal = 4; gotX = false;
+                        break;
+                    case "E":
+                        xVal = 5; gotX = false;
+                        break;
+                    case "F":
+                        xVal = 6; gotX = false;
+                        break;
+                    case "G":
+                        xVal = 7; gotX = false;
+                        break;
+                    case "H":
+                        xVal = 8; gotX = false;
+                        break;
+                    case "I":
+                        xVal = 9; gotX = false;
+                        break;
+                    case "J":
+                        xVal = 10; gotX = false;
+                        break;
+                    default:
+                        Console.WriteLine("Selection is not valid");
+                        break;
+                }
+
+            }
+            while (gotY)
+            {
+                Console.Write("Select 1 - 10: ");
+                try
+                {
+                    yVal = Convert.ToInt32(Console.ReadLine());
+                    if (yVal < 1 || yVal > 10)
+                    {
+                        Console.WriteLine("Selection is not valid");
+                    }
+                    else
+                    {
+                        gotY = false;
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Selection is not valid");
+                }
+            }
+            values[0] = xVal - 1;//good for putting down coordinates in 0based index
+            values[1] = yVal - 1;//not as good when writing out to player
+            return values;      //either work out here or whenever it's printed
         }
     }
 }

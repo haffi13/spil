@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace spil
 {
-    class BsMenu : Program      //if stack overflow check me!!!
+    class BsMenu : Program     //if stack overflow check me!!!
     {
         
         Battleships battleships = new Battleships();
-        public void Show()
+        public void ShowBsMenu()
         {
             bool running = true;
             string choice = "";
@@ -44,10 +44,11 @@ namespace spil
             return Console.ReadLine();
         }
 
-        private void ShootAtShip()
+        public void ShootAtShip()
         {//shoot
             Console.Clear();
-            Console.WriteLine(battleships.GetGameBoardView(battleships.player1ships));
+            battleships.PlaceShips();
+            Console.WriteLine(battleships.GetGameBoardViewBs(battleships.player1ships));
             Console.ReadLine();
         }
 

@@ -27,11 +27,15 @@ namespace spil
             if(sel == 1)
             {
                 BsMenu menu = new BsMenu();
-                menu.Show();
+                //call for placing ships ??
+                menu.ShowBsMenu();
+
                 //menu.PlaceShips();
             }
             else
             {
+                Console.WriteLine("Goes into tictactoe");
+                Console.ReadKey();
                 TicTacToeMenu menu = new TicTacToeMenu();
                 menu.Show();
             }

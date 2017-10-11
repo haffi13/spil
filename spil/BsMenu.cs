@@ -49,6 +49,7 @@ namespace spil
             }
             else
             {
+                battleships.InstansiateBoards();
                 PlaceShips();
                 return string.Empty;
             }

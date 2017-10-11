@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using Console = Colorful.Console;
 
-namespace spil
+namespace spil                                  //if you win, need to clear boards of shots and ships
 {
-    class Battleships
+    public class Battleships //was just class, changed to public for testing purposes
     {
         public char[,] player1ships { get; set; }
         public char[,] player1shots { get; set; }
@@ -17,7 +18,7 @@ namespace spil
         int player1hits = 0;
         int player2hits = 0;
 
-        public Battleships()
+        public void InstansiateBoards()
         {
              player1ships = new char[10, 10]
             {
@@ -200,7 +201,9 @@ namespace spil
                 else
                 {
                     Console.WriteLine("Player 1 WON!");
-                }   
+                }
+                InstansiateBoards();
+                Console.ReadKey();
             }
             else
             {
@@ -231,13 +234,14 @@ namespace spil
  
             if(numberOfPlays % 2 == 0)
             {//player 1 is doing, shoot at player 2
+
                 Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots));
                 int[] shotXY = getXY();
 
                 if(player2ships[shotXY[0],shotXY[1]] != ' ')
                 {//ship hit
                     Console.WriteLine("RAMT!");
-                    //Console.ForegroundColor = ConsoleColor.Cyan;
+                    
                     player1shots[shotXY[0], shotXY[1]] = 'X';
                     //Console.ForegroundColor = ConsoleColor.White;
                     player1hits++;
@@ -271,6 +275,7 @@ namespace spil
                     player2shots[shotXY[0], shotXY[1]] = 'O';
                 }
                 player1ships[shotXY[0], shotXY[1]] = 'X';
+                Console.ReadKey();
                 Console.Clear();
                 Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
             }
@@ -405,6 +410,11 @@ namespace spil
                                   "You have " + (amout - loopValue) + " " + name + " left.";
 
             return ret;
+        }
+
+        void ColorSelectLetter()
+        {
+
         }
 
         public bool CheckPosition(int shipLenght, int startX, int startY, int direction)

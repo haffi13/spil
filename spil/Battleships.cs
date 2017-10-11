@@ -9,8 +9,13 @@ namespace spil
     class Battleships
     {
         public char[,] player1ships { get; set; }
+        public char[,] player1shots { get; set; }
+
         public char[,] player2ships { get; set; }
+        public char[,] player2shots { get; set; }
         public int numberOfPlays = 0;
+        int player1hits = 0;
+        int player2hits = 0;
 
         public Battleships()
         {
@@ -41,8 +46,36 @@ namespace spil
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
            };
+
+            player1shots = new char[10, 10]
+          {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+          };
+            player2shots = new char[10, 10]
+          {
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+          };
+
         }
-        public string GetGameBoardViewBs(char[,] curr)
+        public string GetGameBoardViewLayDown(char[,] curr)
         {
             string boardLayout = string.Empty;
 
@@ -91,7 +124,58 @@ namespace spil
             return boardLayout;
         }
 
-        public char[,] CurrentPlayer()
+        public string GetGameBoardViewPlay(char[,] board1, char[,] board2)
+        {
+            string boardLayout = string.Empty;
+
+
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "10 *  " + board1[0, 9] + "  *  " + board1[1, 9] + "  *  " + board1[2, 9] + "  *  " + board1[3, 9] + "  *  " + board1[4, 9] + "  *  " + board1[5, 9] + "  *  " + board1[6, 9] + "  *  " + board1[7, 9] + "  *  " + board1[8, 9] + "  *  " + board1[9, 9] + "  *" + "   " + "10 *  " + board2[0, 9] + "  *  " + board2[1, 9] + "  *  " + board2[2, 9] + "  *  " + board2[3, 9] + "  *  " + board2[4, 9] + "  *  " + board2[5, 9] + "  *  " + board2[6, 9] + "  *  " + board2[7, 9] + "  *  " + board2[8, 9] + "  *  " + board2[9, 9] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 9 *  " + board1[0, 8] + "  *  " + board1[1, 8] + "  *  " + board1[2, 8] + "  *  " + board1[3, 8] + "  *  " + board1[4, 8] + "  *  " + board1[5, 8] + "  *  " + board1[6, 8] + "  *  " + board1[7, 8] + "  *  " + board1[8, 8] + "  *  " + board1[9, 8] + "  *" + "   " + " 9 *  " + board2[0, 8] + "  *  " + board2[1, 8] + "  *  " + board2[2, 8] + "  *  " + board2[3, 8] + "  *  " + board2[4, 8] + "  *  " + board2[5, 8] + "  *  " + board2[6, 8] + "  *  " + board2[7, 8] + "  *  " + board2[8, 8] + "  *  " + board2[9, 8] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 8 *  " + board1[0, 7] + "  *  " + board1[1, 7] + "  *  " + board1[2, 7] + "  *  " + board1[3, 7] + "  *  " + board1[4, 7] + "  *  " + board1[5, 7] + "  *  " + board1[6, 7] + "  *  " + board1[7, 7] + "  *  " + board1[8, 7] + "  *  " + board1[9, 7] + "  *" + "   " + " 8 *  " + board2[0, 7] + "  *  " + board2[1, 7] + "  *  " + board2[2, 7] + "  *  " + board2[3, 7] + "  *  " + board2[4, 7] + "  *  " + board2[5, 7] + "  *  " + board2[6, 7] + "  *  " + board2[7, 7] + "  *  " + board2[8, 7] + "  *  " + board2[9, 7] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 7 *  " + board1[0, 6] + "  *  " + board1[1, 6] + "  *  " + board1[2, 6] + "  *  " + board1[3, 6] + "  *  " + board1[4, 6] + "  *  " + board1[5, 6] + "  *  " + board1[6, 6] + "  *  " + board1[7, 6] + "  *  " + board1[8, 6] + "  *  " + board1[9, 6] + "  *" + "   " + " 7 *  " + board2[0, 6] + "  *  " + board2[1, 6] + "  *  " + board2[2, 6] + "  *  " + board2[3, 6] + "  *  " + board2[4, 6] + "  *  " + board2[5, 6] + "  *  " + board2[6, 6] + "  *  " + board2[7, 6] + "  *  " + board2[8, 6] + "  *  " + board2[9, 6] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 6 *  " + board1[0, 5] + "  *  " + board1[1, 5] + "  *  " + board1[2, 5] + "  *  " + board1[3, 5] + "  *  " + board1[4, 5] + "  *  " + board1[5, 5] + "  *  " + board1[6, 5] + "  *  " + board1[7, 5] + "  *  " + board1[8, 5] + "  *  " + board1[9, 5] + "  *" + "   " + " 6 *  " + board2[0, 5] + "  *  " + board2[1, 5] + "  *  " + board2[2, 5] + "  *  " + board2[3, 5] + "  *  " + board2[4, 5] + "  *  " + board2[5, 5] + "  *  " + board2[6, 5] + "  *  " + board2[7, 5] + "  *  " + board2[8, 5] + "  *  " + board2[9, 5] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 5 *  " + board1[0, 4] + "  *  " + board1[1, 4] + "  *  " + board1[2, 4] + "  *  " + board1[3, 4] + "  *  " + board1[4, 4] + "  *  " + board1[5, 4] + "  *  " + board1[6, 4] + "  *  " + board1[7, 4] + "  *  " + board1[8, 4] + "  *  " + board1[9, 4] + "  *" + "   " + " 5 *  " + board2[0, 4] + "  *  " + board2[1, 4] + "  *  " + board2[2, 4] + "  *  " + board2[3, 4] + "  *  " + board2[4, 4] + "  *  " + board2[5, 4] + "  *  " + board2[6, 4] + "  *  " + board2[7, 4] + "  *  " + board2[8, 4] + "  *  " + board2[9, 4] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 4 *  " + board1[0, 3] + "  *  " + board1[1, 3] + "  *  " + board1[2, 3] + "  *  " + board1[3, 3] + "  *  " + board1[4, 3] + "  *  " + board1[5, 3] + "  *  " + board1[6, 3] + "  *  " + board1[7, 3] + "  *  " + board1[8, 3] + "  *  " + board1[9, 3] + "  *" + "   " + " 4 *  " + board2[0, 3] + "  *  " + board2[1, 3] + "  *  " + board2[2, 3] + "  *  " + board2[3, 3] + "  *  " + board2[4, 3] + "  *  " + board2[5, 3] + "  *  " + board2[6, 3] + "  *  " + board2[7, 3] + "  *  " + board2[8, 3] + "  *  " + board2[9, 3] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 3 *  " + board1[0, 2] + "  *  " + board1[1, 2] + "  *  " + board1[2, 2] + "  *  " + board1[3, 2] + "  *  " + board1[4, 2] + "  *  " + board1[5, 2] + "  *  " + board1[6, 2] + "  *  " + board1[7, 2] + "  *  " + board1[8, 2] + "  *  " + board1[9, 2] + "  *" + "   " + " 3 *  " + board2[0, 2] + "  *  " + board2[1, 2] + "  *  " + board2[2, 2] + "  *  " + board2[3, 2] + "  *  " + board2[4, 2] + "  *  " + board2[5, 2] + "  *  " + board2[6, 2] + "  *  " + board2[7, 2] + "  *  " + board2[8, 2] + "  *  " + board2[9, 2] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 2 *  " + board1[0, 1] + "  *  " + board1[1, 1] + "  *  " + board1[2, 1] + "  *  " + board1[3, 1] + "  *  " + board1[4, 1] + "  *  " + board1[5, 1] + "  *  " + board1[6, 1] + "  *  " + board1[7, 1] + "  *  " + board1[8, 1] + "  *  " + board1[9, 1] + "  *" + "   " + " 2 *  " + board2[0, 1] + "  *  " + board2[1, 1] + "  *  " + board2[2, 1] + "  *  " + board2[3, 1] + "  *  " + board2[4, 1] + "  *  " + board2[5, 1] + "  *  " + board2[6, 1] + "  *  " + board2[7, 1] + "  *  " + board2[8, 1] + "  *  " + board2[9, 1] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += " 1 *  " + board1[0, 0] + "  *  " + board1[1, 0] + "  *  " + board1[2, 0] + "  *  " + board1[3, 0] + "  *  " + board1[4, 0] + "  *  " + board1[5, 0] + "  *  " + board1[6, 0] + "  *  " + board1[7, 0] + "  *  " + board1[8, 0] + "  *  " + board1[9, 0] + "  *" + "   " + " 1 *  " + board2[0, 0] + "  *  " + board2[1, 0] + "  *  " + board2[2, 0] + "  *  " + board2[3, 0] + "  *  " + board2[4, 0] + "  *  " + board2[5, 0] + "  *  " + board2[6, 0] + "  *  " + board2[7, 0] + "  *  " + board2[8, 0] + "  *  " + board2[9, 0] + "  *\n";
+            boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
+            boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
+            boardLayout += "      A     B     C     D     E     F     G     H     I     J   " + "   " + "      A     B     C     D     E     F     G     H     I     J   ";
+
+            return boardLayout;
+        }
+
+        public char[,] CurrentPlayerBoard()
         {
             if(numberOfPlays % 2 == 0)
             {//player1
@@ -102,11 +186,83 @@ namespace spil
                 return player2ships;
             }
         }
+        
+        public void ValidateWinner(int p1, int p2)
+        {
+            if(p1 == 28 || p2 == 28)
+            {
+                Console.Clear();
+                if(p1 == 28)
+                {
+                    Console.WriteLine("Player 1 WON!");
+                }
+                else
+                {
+                    Console.WriteLine("Player 1 WON!");
+                }   
+            }
+            else
+            {
+                PlaceShot();
+            }
+        }
+
+        public void PlaceShot()
+        {
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("Next Player!");
+            Console.ReadKey();
+            Console.Clear();
+            
+            if(numberOfPlays % 2 == 0)
+            {//player 1 is doing, shoot at player 2
+                Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots));
+                int[] shotXY = getXY();
+
+                if(player2ships[shotXY[0],shotXY[1]] != ' ')
+                {//ship hit
+                    Console.WriteLine("RAMT!");
+                    player1shots[shotXY[0], shotXY[1]] = 'X';
+                    player1hits++;
+                }
+                else
+                {//not hit
+                    Console.WriteLine("PLASK");
+                    player1shots[shotXY[0], shotXY[1]] = 'O';
+                }
+                player2ships[shotXY[0], shotXY[1]] = 'X';   //to show where u shoot on opponents board
+                Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots)); 
+            }
+
+            else
+            {
+                Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
+                int[] shotXY = getXY();
+
+                if (player1ships[shotXY[0], shotXY[1]] != ' ')
+                {//ship hit
+                    Console.WriteLine("RAMT!");
+                    player2shots[shotXY[0], shotXY[1]] = 'X';
+                    player2hits++;
+                }
+                else
+                {//not hit
+                    Console.WriteLine("PLASK");
+                    player2shots[shotXY[0], shotXY[1]] = 'O';
+                }
+                player1ships[shotXY[0], shotXY[1]] = 'X';
+                Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
+            }
+            numberOfPlays++;
+            ValidateWinner(player1hits, player2hits);
+
+        }
 
         public void PlaceShips()
         //9 total ships per player
         {
-            Console.WriteLine(GetGameBoardViewBs(CurrentPlayer()));
+            Console.WriteLine(GetGameBoardViewLayDown(CurrentPlayerBoard()));
 
             Skib Hangar = new Skib();
             Hangar.amount = 1;
@@ -215,6 +371,11 @@ namespace spil
                 }
             }
             numberOfPlays++;
+
+            if(numberOfPlays > 1)//find a way to do this from menu!
+            {
+                PlaceShot();
+            }
         }
 
         public string ShipPlacingMessage(int amout, int loopValue, int lenght, string name)
@@ -227,9 +388,6 @@ namespace spil
 
         public bool CheckPosition(int shipLenght, int startX, int startY, int direction)
         {
-            //char init = name[0];
-
-            //bool ret = false;
             bool isOverlap = false;
 
             if (direction == 1 || direction == 3)//1north/3south
@@ -253,21 +411,17 @@ namespace spil
                 }
                 for (int i = 0; i < shipLenght; i++)
                 {
-                    if(CurrentPlayer()[startX, startY + i] != ' ')
+                    if(CurrentPlayerBoard()[startX, startY + i] != ' ')
                     {
                         isOverlap = true;
                         Console.WriteLine("Your ships can NOT overlap!");
                     }
-                   
-
-                    //CurrentPlayer()[startX, startY + i] = init;
                 }
             }
             if(direction == 2 || direction == 4)//east/west
             {
                 if(direction == 2)
                 {
-                    //startX += (shipLenght-1);
                     if(startX + (shipLenght-1) > 10)
                     {//out of bounds
                         isOverlap = true;
@@ -285,7 +439,7 @@ namespace spil
                 }
                 for (int i = 0; i < shipLenght; i++)
                 {
-                    if(CurrentPlayer()[startX + i, startY] != ' ')
+                    if(CurrentPlayerBoard()[startX + i, startY] != ' ')
                     {
                         isOverlap = true;
                         Console.WriteLine("Your ships can NOT overlap!");
@@ -307,7 +461,7 @@ namespace spil
                 }
                 for (int i = 0; i < shipLength; i++)
                 {
-                    CurrentPlayer()[startX, startY + i] = init;
+                    CurrentPlayerBoard()[startX, startY + i] = init;
                 }
             }
             if(direction == 2 || direction == 4)//2 east -- 4 west
@@ -318,11 +472,11 @@ namespace spil
                 }
                 for (int i = 0; i < shipLength; i++)
                 {
-                    CurrentPlayer()[startX + i, startY] = init;
+                    CurrentPlayerBoard()[startX + i, startY] = init;
                 }
             }
             Console.Clear();//make method
-            Console.WriteLine(GetGameBoardViewBs(CurrentPlayer()));
+            Console.WriteLine(GetGameBoardViewLayDown(CurrentPlayerBoard()));
         }
 
         public int GetDirection()
@@ -351,13 +505,7 @@ namespace spil
             }
             return dirValue;
         }
-
         
-          
-        /*public bool CheckPosition()
-        {//checks for overlap and puts ship on board...calls get ship
-            
-        }*/
 
         public int[] getXY()    //gets x and y values 
         {
@@ -406,7 +554,6 @@ namespace spil
                         Console.WriteLine("Selection is not valid");
                         break;
                 }
-
             }
             while (gotY)
             {

@@ -37,7 +37,7 @@ namespace spil
         private string GetUserChoise()
         {
             Console.Clear();
-            Console.WriteLine(battleships.GetGameBoardViewBs(battleships.CurrentPlayer()));
+            Console.WriteLine(battleships.GetGameBoardViewLayDown(battleships.CurrentPlayerBoard()));
             Console.WriteLine("1  -  Place Ships\n2  -  Place a shot\n0  -  Quit Game");
             Console.Write("\nIndtast dit valg: ");
             return Console.ReadLine();
@@ -50,7 +50,7 @@ namespace spil
         public void PlaceShips()
         {//placesShips
             Console.Clear();
-            Console.WriteLine(battleships.GetGameBoardViewBs(battleships.player1ships));
+            Console.WriteLine(battleships.GetGameBoardViewLayDown(battleships.player1ships));
             battleships.PlaceShips();
             Console.ReadLine();
         }

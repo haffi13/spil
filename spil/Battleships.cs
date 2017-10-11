@@ -79,6 +79,7 @@ namespace spil
         {
             string boardLayout = string.Empty;
 
+            boardLayout += CurrentPlayer();
             boardLayout += "   *************************************************************\n";
             boardLayout += "   *     *     *     *     *     *     *     *     *     *     *\n";
             boardLayout += "10 *  " + curr[0, 9] + "  *  " + curr[1, 9] + "  *  " + curr[2, 9] + "  *  " + curr[3, 9] + "  *  " + curr[4, 9] + "  *  " + curr[5, 9] + "  *  " + curr[6, 9] + "  *  " + curr[7, 9] + "  *  " + curr[8, 9] + "  *  " + curr[9, 9] + "  *\n";
@@ -128,7 +129,7 @@ namespace spil
         {
             string boardLayout = string.Empty;
 
-
+            boardLayout += CurrentPlayer();
             boardLayout += "   *************************************************************" + "   " + "   *************************************************************\n";
             boardLayout += "   *     *     *     *     *     *     *     *     *     *     *" + "   " + "   *     *     *     *     *     *     *     *     *     *     *\n";
             boardLayout += "10 *  " + board1[0, 9] + "  *  " + board1[1, 9] + "  *  " + board1[2, 9] + "  *  " + board1[3, 9] + "  *  " + board1[4, 9] + "  *  " + board1[5, 9] + "  *  " + board1[6, 9] + "  *  " + board1[7, 9] + "  *  " + board1[8, 9] + "  *  " + board1[9, 9] + "  *" + "   " + "10 *  " + board2[0, 9] + "  *  " + board2[1, 9] + "  *  " + board2[2, 9] + "  *  " + board2[3, 9] + "  *  " + board2[4, 9] + "  *  " + board2[5, 9] + "  *  " + board2[6, 9] + "  *  " + board2[7, 9] + "  *  " + board2[8, 9] + "  *  " + board2[9, 9] + "  *\n";
@@ -207,14 +208,27 @@ namespace spil
             }
         }
 
+        public string CurrentPlayer()
+        {
+            string ret = string.Empty;
+            if(numberOfPlays % 2 == 0)
+            {
+                ret = "   ---   Player 1   ---   \n";
+            }
+            else
+            {
+                ret = "   ---   Player 2   ---   \n";
+            }
+            return ret;
+        }
+
         public void PlaceShot()
         {
+            Console.Clear();
+            Console.WriteLine(CurrentPlayer() + "'s turn!");
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine("Next Player!");
-            Console.ReadKey();
-            Console.Clear();
-            
+ 
             if(numberOfPlays % 2 == 0)
             {//player 1 is doing, shoot at player 2
                 Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots));
@@ -223,7 +237,9 @@ namespace spil
                 if(player2ships[shotXY[0],shotXY[1]] != ' ')
                 {//ship hit
                     Console.WriteLine("RAMT!");
+                    //Console.ForegroundColor = ConsoleColor.Cyan;
                     player1shots[shotXY[0], shotXY[1]] = 'X';
+                    //Console.ForegroundColor = ConsoleColor.White;
                     player1hits++;
                 }
                 else
@@ -231,7 +247,10 @@ namespace spil
                     Console.WriteLine("PLASK");
                     player1shots[shotXY[0], shotXY[1]] = 'O';
                 }
+                //Console.ForegroundColor = ConsoleColor.Cyan;
                 player2ships[shotXY[0], shotXY[1]] = 'X';   //to show where u shoot on opponents board
+               // Console.ForegroundColor = ConsoleColor.White;
+                Console.Clear();
                 Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots)); 
             }
 
@@ -252,8 +271,10 @@ namespace spil
                     player2shots[shotXY[0], shotXY[1]] = 'O';
                 }
                 player1ships[shotXY[0], shotXY[1]] = 'X';
+                Console.Clear();
                 Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
             }
+            Console.ReadKey();
             numberOfPlays++;
             ValidateWinner(player1hits, player2hits);
 
@@ -372,10 +393,10 @@ namespace spil
             }
             numberOfPlays++;
 
-            if(numberOfPlays > 1)//find a way to do this from menu!
+            /*if(numberOfPlays > 1)//find a way to do this from menu!
             {
                 PlaceShot();
-            }
+            }*/
         }
 
         public string ShipPlacingMessage(int amout, int loopValue, int lenght, string name)

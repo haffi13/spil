@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace spil
 {
-    class BsMenu : Program     //if stack overflow check me!!!
+    class BsMenu : Program     
     {
         
         Battleships battleships = new Battleships();
+        int placeShipCheck;
         public void ShowBsMenu()
         {
             bool running = true;
             string choice = "";
             do
             {
-                //ShowMenu();
                 choice = GetUserChoise();
-                switch (choice)
+                switch (choice)                         //make starting over possible
                 {
                     case "1": PlaceShips(); break;
-                    case "2": PlaceShot(); break;                                            
+                                           
                     case "3": StartOver(); break;          //startOVer
                     case "0": ExitGame(); break;          //Exit
                     //case "0": running = false; DoActionFor0(); break;
@@ -30,29 +30,45 @@ namespace spil
             } while (running);
         }
 
-        
-
-        
-
         private string GetUserChoise()
         {
             Console.Clear();
-            Console.WriteLine(battleships.GetGameBoardViewLayDown(battleships.CurrentPlayerBoard()));
-            Console.WriteLine("1  -  Place Ships\n2  -  Place a shot\n0  -  Quit Game");
-            Console.Write("\nIndtast dit valg: ");
-            return Console.ReadLine();
+            if(placeShipCheck != 1)
+            {
+                if (placeShipCheck >= 2) //game in progress, cant place ships
+                {
+                    Console.WriteLine("1  -  Start Game\n0  -  Quit Game");
+                }
+                else
+                {
+                    //Console.WriteLine(battleships.GetGameBoardViewLayDown(battleships.CurrentPlayerBoard()));
+                    Console.WriteLine("1  -  Place Ships\n0  -  Quit Game");
+                }
+                Console.Write("\nIndtast dit valg: ");
+                return Console.ReadLine();
+            }
+            else
+            {
+                PlaceShips();
+                return string.Empty;
+            }
         }
 
-        public void PlaceShot()
-        {
-
-        }
+        
         public void PlaceShips()
         {//placesShips
-            Console.Clear();
-            Console.WriteLine(battleships.GetGameBoardViewLayDown(battleships.player1ships));
-            battleships.PlaceShips();
-            Console.ReadLine();
+            if(placeShipCheck >= 2)//shoot in here
+            {
+                battleships.PlaceShot();
+            }
+            else
+            {
+                Console.Clear();
+                battleships.PlaceShips();
+                placeShipCheck++;
+                Console.ReadLine();
+            }
+            
         }
 
         public void StartOver()

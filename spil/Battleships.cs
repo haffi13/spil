@@ -19,6 +19,9 @@ namespace spil                                  //if you win, need to clear boar
         int player2hits = 0;
         int player1ShipsLeft = 9;
         int player2ShipsLeft = 9;
+        public int gameVariation;
+        bool p1LosesTurn = false;
+        bool p2LosesTurn = false;
 
         public Battleships()
         {
@@ -156,7 +159,7 @@ namespace spil                                  //if you win, need to clear boar
             }
         }
         
-        public void ValidateWinner(int p1, int p2)
+        public void ValidateWinner(int p1, int p2) //1 = bombs 2=nobombs
         {
             if(p1 == 28 || p2 == 28)
             {
@@ -215,21 +218,42 @@ namespace spil                                  //if you win, need to clear boar
 
                 if(player2ships[shotXY[0],shotXY[1]] != ' ' && player2ships[shotXY[0], shotXY[1]] != 'X' && player2ships[shotXY[0], shotXY[1]] != 'O')
                 {//ship hit
-                    Console.WriteLine("RAMT!");
                     char shipLetter = player2ships[shotXY[0], shotXY[1]];
-                    player1shots[shotXY[0], shotXY[1]] = 'X';
-                    player2ships[shotXY[0], shotXY[1]] = 'X';   //to show where u shoot on opponents board
-                    SinkCheck(shotXY[0], shotXY[1], 1, shipLetter);
-                    player1hits++;
+                       //to show where u shoot on opponents board
+                    if(player2ships[shotXY[0],shotXY[1]] != 'm')
+                    {
+                        player1hits++;
+                        player1shots[shotXY[0], shotXY[1]] = 'X';
+                        player2ships[shotXY[0], shotXY[1]] = 'X';
+                        Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots));
+                        Console.WriteLine("RAMT!");
+                        SinkCheck(shotXY[0], shotXY[1], 1, shipLetter);
+                        p1LosesTurn = false;
+                    }
+                    else
+                    {
+                        player1shots[shotXY[0], shotXY[1]] = 'X';
+                        player2ships[shotXY[0], shotXY[1]] = 'X';
+                        Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots));
+                        Console.WriteLine("BAM! \nYou hit a mine, you lose a turn!");
+                        p1LosesTurn = true;
+                    }
+
                 }
                 else
                 {//not hit
-                    Console.WriteLine("PLASK");
                     player1shots[shotXY[0], shotXY[1]] = 'O';
+                    Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots));
+                    Console.WriteLine("PLASK");
+                }
+                if (p2LosesTurn == false) numberOfPlays++;
+                else
+                {
+                    p2LosesTurn = false;
+                    numberOfPlays += 2;
                 }
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine(GetGameBoardViewPlay(player1ships, player1shots)); 
             }
 
             else
@@ -239,24 +263,42 @@ namespace spil                                  //if you win, need to clear boar
 
                 if (player1ships[shotXY[0], shotXY[1]] != ' ' && player1ships[shotXY[0], shotXY[1]] != 'X' && player1ships[shotXY[0], shotXY[1]] != 'O')
                 {//ship hit
-                    Console.WriteLine("RAMT!");
                     char shipLetter = player1ships[shotXY[0], shotXY[1]];
-                    player2shots[shotXY[0], shotXY[1]] = 'X';
-                    player1ships[shotXY[0], shotXY[1]] = 'X';
-                    SinkCheck(shotXY[0], shotXY[1], 2, shipLetter);
-                    player2hits++;
+                    
+                    if(player1ships[shotXY[0],shotXY[1]] != 'm')
+                    {
+                        player2hits++;
+                        player2shots[shotXY[0], shotXY[1]] = 'X';
+                        player1ships[shotXY[0], shotXY[1]] = 'X';
+                        Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
+                        Console.WriteLine("RAMT!");
+                        SinkCheck(shotXY[0], shotXY[1], 2, shipLetter);
+                        p2LosesTurn = false;
+                    }
+                    else
+                    {
+                        player2shots[shotXY[0], shotXY[1]] = 'X';
+                        player1ships[shotXY[0], shotXY[1]] = 'X';
+                        Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
+                        Console.WriteLine("BAM! \nYou hit a mine, you lose a turn!");
+                        p2LosesTurn = true;
+                    }
                 }
                 else
                 {//not hit
-                    Console.WriteLine("PLASK");
                     player2shots[shotXY[0], shotXY[1]] = 'O';
+                    Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
+                    Console.WriteLine("PLASK");
+                }
+                if (p1LosesTurn == false) numberOfPlays++;
+                else
+                {
+                    p1LosesTurn = false;
+                    numberOfPlays += 2;
                 }
                 Console.ReadKey();
                 Console.Clear();
-                Console.WriteLine(GetGameBoardViewPlay(player2ships, player2shots));
             }
-            //Console.ReadKey();
-            numberOfPlays++;
             ValidateWinner(player1hits, player2hits);
         }
 
@@ -272,9 +314,13 @@ namespace spil                                  //if you win, need to clear boar
                         if(player2ships[i,j] == ship)
                         {//not sunk
                             shipSunk = false;
-                            player2ShipsLeft--;
                         }
                     }
+                }
+                if (shipSunk == true)
+                {
+                    player2ShipsLeft--;
+                    MakeMsg(player);
                 }
             }
             else
@@ -286,16 +332,14 @@ namespace spil                                  //if you win, need to clear boar
                         if (player1ships[i, j] == ship)
                         {//not sunk
                             shipSunk = false;
-                            player1ShipsLeft--;
                         }
                     }
                 }
-            }
-            if(shipSunk == true)
-            {
-                MakeMsg(player);
-                //Console.WriteLine("You have sunk a ship!");
-                Console.ReadKey();
+                if (shipSunk == true)
+                {
+                    player1ShipsLeft--;
+                    MakeMsg(player);
+                }
             }
         }
 
@@ -319,10 +363,7 @@ namespace spil                                  //if you win, need to clear boar
                 {
                     SetShip("a", Hangar.length, Hangar.startX, Hangar.startY, Hangar.direction);
                 }
-                else
-                {
-                    i -= 1;
-                }
+                else i -= 1;
             }
 
             Skib Slagskib = new Skib();
@@ -342,10 +383,7 @@ namespace spil                                  //if you win, need to clear boar
                 {
                     SetShip(id, Slagskib.length, Slagskib.startX, Slagskib.startY, Slagskib.direction);
                 }
-                else
-                {
-                    i -= 1;
-                }
+                else i -= 1;
             }
 
             Skib Destroyer = new Skib();
@@ -365,10 +403,7 @@ namespace spil                                  //if you win, need to clear boar
                 {
                     SetShip(id, Destroyer.length, Destroyer.startX, Destroyer.startY, Destroyer.direction);
                 }
-                else
-                {
-                    i -= 1;
-                }
+                else i -= 1;
             }
             
             Skib Uboat = new Skib();
@@ -387,10 +422,7 @@ namespace spil                                  //if you win, need to clear boar
                 {
                     SetShip(id, Uboat.length, Uboat.startX, Uboat.startY, Uboat.direction);
                 }
-                else
-                {
-                    i -= 1;
-                }
+                else i -= 1;
             }
             
 
@@ -412,9 +444,28 @@ namespace spil                                  //if you win, need to clear boar
                 {
                     SetShip(id, PatrolBoat.length, PatrolBoat.startX, PatrolBoat.startY, PatrolBoat.direction);
                 }
-                else
+                else i -= 1;
+            }
+
+            if(gameVariation == 1)
+            {
+                Skib Mine = new Skib();
+                Mine.amount = 10;
+                Mine.length = 1;
+                Mine.name = "Mine";
+                id = "m";
+                for (int i = 0; i < Mine.amount; i++)
                 {
-                    i -= 1;
+                    Console.WriteLine(ShipPlacingMessage(Mine.amount, i, Mine.length, Mine.name));
+                    int[] MineXY = getXY();
+                    Mine.startX = MineXY[0];
+                    Mine.startY = MineXY[1];
+                    Mine.direction = 1;
+                    if (CheckPosition(Mine.length, Mine.startX, Mine.startY, Mine.direction) == true)
+                    {
+                        SetShip(id, Mine.length, Mine.startX, Mine.startY, Mine.direction);
+                    }
+                    else i -= 1;       
                 }
             }
             numberOfPlays++;
@@ -567,7 +618,7 @@ namespace spil                                  //if you win, need to clear boar
             {
                 Console.WriteLine(s + "\nYou have: " + player1ShipsLeft + " ships left to sink!");
             }
-            Console.ReadKey();
+            
         }
 
         public int[] getXY()    //gets x and y values 

@@ -11,8 +11,10 @@ namespace spil
         
         Battleships battleships = new Battleships();
         int placeShipCheck;
+        
         public void ShowBsMenu()
         {
+            battleships.gameVariation = GetVariation();
             bool running = true;
             string choice = "";
             do
@@ -21,7 +23,6 @@ namespace spil
                 switch (choice)                         //make starting over possible
                 {
                     case "1": PlaceShips(); break;
-                                           
                     case "3": StartOver(); break;          //startOVer
                     case "0": ExitGame(); break;          //Exit
                     //case "0": running = false; DoActionFor0(); break;
@@ -39,8 +40,9 @@ namespace spil
                 {
                     Console.WriteLine("1  -  Start Game\n0  -  Quit Game");
                 }
+
                 else
-                {                    
+                {
                     Console.WriteLine("1  -  Place Ships\n0  -  Quit Game");
                 }
                 Console.Write("\nIndtast dit valg: ");
@@ -53,7 +55,32 @@ namespace spil
             }
         }
 
-        
+        public int GetVariation()
+        {
+            bool running = true;
+            int sel = 0;
+            Console.WriteLine("Select variation: \n1  -  With bombs\n2  -  Without bombs");
+            Console.Write("\nIndtast dit valg: ");
+            while (running)
+            {
+                try
+                {
+                    sel = Convert.ToInt32(Console.ReadLine());
+                    if (sel < 0 && sel > 2)
+                    {
+                        Console.WriteLine("Selection is not valid!");
+                    }
+                    else running = false;  
+                }
+                catch
+                {
+                    Console.WriteLine("Selection is not valid!");
+                }
+            }
+            return sel;
+            
+        }
+
         public void PlaceShips()
         {//placesShips
             if(placeShipCheck >= 2)//shoot in here

@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace spil
 {
-    
-    
     [TestClass]
     public class BsTest 
     {
-
-        public Battleships battleships;
-
+        //public Battleships battleships;
         public char[,] testArr { get; set; }
-        public char[,] testArr2 { get; set; }
 
         [TestInitialize]
         public void setuptest()
@@ -33,41 +28,47 @@ namespace spil
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
                 {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
-            };
-
-            testArr2 = new char[10, 10]
-          {
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
-                {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
-          };
+            };           
         }
-
 
         [TestMethod]
         public void DoesWinningClearBoards()
         {
-            battleships.ValidateWinner(28, 2);
+            Battleships bs = new Battleships();
+            bs.player2ships[5, 9] = 'g';
+            bs.ValidateWinner(28, 19);
 
-            Assert.AreEqual(testArr, battleships.player1ships);
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Assert.AreEqual(testArr[i, j], bs.player2ships[i, j]);
+                }
+            }
         }
 
         [TestMethod]
         public void DoesBoardInstansiationWork()
         {
-            setuptest();
             Battleships bs = new Battleships();
-            bs.InstansiateBoards();
+            //bs.InstansiateBoards();
 
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Assert.AreEqual(testArr[i, j], bs.player1ships[i, j]);
+                }
+            }   
+        }
 
-            Assert.AreEqual(testArr, battleships.player1shots);
+        [TestMethod]
+        public void test()
+        {
+            Battleships bs = new Battleships();
+            
+            //bs.SetShip("bla", )
+
         }
     }
 }

@@ -40,8 +40,7 @@ namespace spil
                     Console.WriteLine("1  -  Start Game\n0  -  Quit Game");
                 }
                 else
-                {
-                    //Console.WriteLine(battleships.GetGameBoardViewLayDown(battleships.CurrentPlayerBoard()));
+                {                    
                     Console.WriteLine("1  -  Place Ships\n0  -  Quit Game");
                 }
                 Console.Write("\nIndtast dit valg: ");
@@ -49,7 +48,6 @@ namespace spil
             }
             else
             {
-                battleships.InstansiateBoards();
                 PlaceShips();
                 return string.Empty;
             }

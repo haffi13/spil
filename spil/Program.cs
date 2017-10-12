@@ -17,7 +17,6 @@ namespace spil
         private void Run()
         {
             SelectGame();
-            
         }
 
         public void SelectGame()

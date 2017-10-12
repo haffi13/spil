@@ -14,6 +14,8 @@ namespace spil
        public int startX;
        public int startY;
        public int direction;
+
+       public Dictionary<int, int> shipPosition = new Dictionary<int, int>();
         
     }
 }

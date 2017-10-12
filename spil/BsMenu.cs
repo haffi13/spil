@@ -59,6 +59,7 @@ namespace spil
         {
             bool running = true;
             int sel = 0;
+            Console.Clear();
             Console.WriteLine("Select variation: \n1  -  With bombs\n2  -  Without bombs");
             Console.Write("\nIndtast dit valg: ");
             while (running)

@@ -66,8 +66,9 @@ namespace spil
         public void test()
         {
             Battleships bs = new Battleships();
+
+            bs.SetShip("bla", 2, 1, 1, 1);
             
-            //bs.SetShip("bla", )
 
         }
     }

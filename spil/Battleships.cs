@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using Console = Colorful.Console;
 
-namespace spil                                  //if you win, need to clear boards of shots and ships
+namespace spil                                  
 {
     public class Battleships //was just class, changed to public for testing purposes
     {
@@ -159,7 +158,7 @@ namespace spil                                  //if you win, need to clear boar
             }
         }
         
-        public void ValidateWinner(int p1, int p2) //1 = bombs 2=nobombs
+        public void ValidateWinner(int p1, int p2) 
         {
             if(p1 == 28 || p2 == 28)
             {
@@ -182,7 +181,13 @@ namespace spil                                  //if you win, need to clear boar
                         player2shots[i, j] = ' ';
                     }
                 }
+                player1hits = 0;
+                player2hits = 0;
+                player1ShipsLeft = 9;
+                player2ShipsLeft = 9;
+                numberOfPlays = 0;
                 Console.ReadKey();
+
             }
             else
             {
